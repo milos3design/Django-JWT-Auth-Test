@@ -1,5 +1,5 @@
-from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.conf import settings
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
 class CustomJWTAuthentication(JWTAuthentication):
@@ -8,7 +8,7 @@ class CustomJWTAuthentication(JWTAuthentication):
             header = self.get_header(request)
 
             if header is None:
-                row_token = request.COOKIES.get(settings.AUTH_COOKIE)
+                raw_token = request.COOKIES.get(settings.AUTH_COOKIE)
             else:
                 raw_token = self.get_raw_token(header)
 
