@@ -10,7 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import sys
 import dotenv
+import dj_database_url
 from os import getenv, path
 from pathlib import Path
 from django.core.management.utils import get_random_secret_key
@@ -23,6 +25,7 @@ dotenv_file = BASE_DIR / '.env.local'
 if path.isfile(dotenv_file):
     dotenv.load_dotenv(dotenv_file)
 
+# DEVELOPMENT_MODE = getenv('DEVELOPMENT_MODE', 'False') == 'True'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -84,10 +87,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -95,15 +94,38 @@ DATABASES = {
     }
 }
 
+# Database
+# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# email
+# if DEVELOPMENT_MODE is True:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': BASE_DIR / 'db.sqlite3',
+#         }
+#     }
+# elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
+#     if getenv('DATABASE_URL', None) is None:
+#         raise Exception('DATABASE_URL environment variable not defined')
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#             'NAME': getenv('DB_NAME'),
+#             'USER': getenv('DB_USER'),
+#             'PASSWORD': getenv('DB_PASSWORD'),
+#             'HOST': '127.0.0.1',
+#             'PORT': '5432',
+#         }
+#     }
+
+
+# Email settings
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = getenv("EMAIL_PORT", default=587)
-EMAIL_HOST_USER = getenv("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = getenv("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = getenv('EMAIL_PORT', default=587)
+EMAIL_HOST_USER = getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
-
 
 DOMAIN = getenv('DOMAIN')
 SITE_NAME = 'Mim Kviz'
@@ -142,16 +164,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'static'
-MEDIA_URL = 'media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+
+    STATIC_URL = 'static/'
+    STATIC_ROOT = BASE_DIR / 'static'
+    MEDIA_URL = 'media/'
+    MEDIA_ROOT = BASE_DIR / 'media'
 
 AUTHENTICATION_BACKENDS = [
     'social_core.backends.google.GoogleOAuth2',
     'social_core.backends.facebook.FacebookOAuth2',
     'django.contrib.auth.backends.ModelBackend',
-
 ]
 
 REST_FRAMEWORK = {
