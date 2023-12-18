@@ -36,8 +36,10 @@ SECRET_KEY = getenv('DJANGO_SECRET_KEY', get_random_secret_key())
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = getenv('DJANGO_ALLOWED_HOSTS',
-                       '127.0.0.1,localhost').split(',')
+# ALLOWED_HOSTS = getenv('DJANGO_ALLOWED_HOSTS',
+#                        '127.0.0.1,localhost').split(',')
+
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "milos3design.pythonanywhere.com"]
 
 
 # Application definition
@@ -87,12 +89,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+    'default': dj_database_url.config(
+        default="sqlite:///" + os.path.join(BASE_DIR, "db.sqlite3")
+    )
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
