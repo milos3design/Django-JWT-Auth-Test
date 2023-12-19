@@ -34,7 +34,7 @@ if path.isfile(dotenv_file):
 SECRET_KEY = getenv('DJANGO_SECRET_KEY', get_random_secret_key())
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = getenv('DEBUG', 'False') == 'True'
+DEBUG = False
 
 # ALLOWED_HOSTS = getenv('DJANGO_ALLOWED_HOSTS',
 #                        '127.0.0.1,localhost').split(',')
@@ -97,33 +97,17 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # }
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default="sqlite:///" + os.path.join(BASE_DIR, "db.sqlite3")
-    )}
-
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-# if DEVELOPMENT_MODE is True:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.sqlite3',
-#             'NAME': BASE_DIR / 'db.sqlite3',
-#         }
-#     }
-# elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
-#     if getenv('DATABASE_URL', None) is None:
-#         raise Exception('DATABASE_URL environment variable not defined')
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#             'NAME': getenv('DB_NAME'),
-#             'USER': getenv('DB_USER'),
-#             'PASSWORD': getenv('DB_PASSWORD'),
-#             'HOST': '127.0.0.1',
-#             'PORT': '5432',
-#         }
-#     }
+    # 'default': dj_database_url.config(
+    #     default="sqlite:///" + os.path.join(BASE_DIR, "db.sqlite3")
+    # )
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'milos3design$default',
+        'USER': 'milos3design',
+        'PASSWORD': 'Sifra123',
+        'HOST': 'milos3design.mysql.pythonanywhere-services.com',
+    }
+}
 
 
 # Email settings
@@ -200,7 +184,11 @@ DJOSER = {
     'USER_CREATE_PASSWORD_RETYPE': True,
     'PASSWORD_RESET_CONFIRM_RETYPE': True,
     'TOKEN_MODEL': None,
-    'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': ['http://localhost:3000/auth/google', 'http://localhost:3000/auth/facebook']
+    'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': [
+        'http://localhost:3000/auth/google',
+        'http://localhost:3000/auth/facebook',
+        'https://milos3design.pythonanywhere.com/auth/google',
+        'https://milos3design.pythonanywhere.com/auth/facebook']
 }
 
 AUTH_COOKIE = 'access'
@@ -236,7 +224,7 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
 
 CORS_ALLOWED_ORIGINS = getenv(
     'CORS_ALLOWED_ORIGINS',
-    'http://localhost:3000,http://127.0.0.1:3000,https://milos3design.pythonanywhere.com/'
+    'http://localhost:3000,http://127.0.0.1:3000,https://milos3design.pythonanywhere.com'
 ).split(',')
 CORS_ALLOW_CREDENTIALS = True
 
