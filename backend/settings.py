@@ -89,12 +89,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
 DATABASES = {
     # 'default': dj_database_url.config(
@@ -104,7 +98,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'milos3design$default',
         'USER': 'milos3design',
-        'PASSWORD': 'Sifra123',
+        'PASSWORD': '',
         'HOST': 'milos3design.mysql.pythonanywhere-services.com',
     }
 }
