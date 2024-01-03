@@ -1,2 +1,2 @@
 # Python/Django JWT Auth
-##Jwt Auth using HTTPOnly Cookies
+## Jwt Auth using HTTPOnly Cookies
